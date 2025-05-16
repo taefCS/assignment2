@@ -62,7 +62,42 @@ public class CPUSchedule {
 
     // خوارزمية FCFS
     public static void fcfs(List<Process> input) {
+for (int i = 0; i < input.size() - 1; i++) {//lop for sort process by the Arrival Time using "Selection sort"
+        int minIndex = i;
+        for (int j = i + 1; j < input.size(); j++) {
+            if (input.get(j).at < input.get(minIndex).at) {
+                minIndex = j;
+            }
+        }
+        if (minIndex != i) {
+            Process temp = input.get(i);
+            input.set(i, input.get(minIndex));
+            input.set(minIndex, temp);
+        }
+    }
 
+        int time = 0;             // to track current time
+        double totalTAT = 0, totalWT = 0; // for calculating averages
+         List<String> gantt = new ArrayList<>();
+
+        // Compute TAT and WT for each process
+        for (Process p : input) {
+            if (time < p.at) {
+                time = p.at;  // wait if cpu is idle
+            }
+
+            gantt.add(p.pid); // build gantt chart
+
+            time += p.bt;              // update  time
+            p.tat = time - p.at;       // calculate turnaround time
+            p.wt = p.tat - p.bt;              // calculate waiting time
+
+            totalTAT += p.tat;                // total turnaround time
+            totalWT += p.wt;                  // total waiting time
+        }
+
+        printOutput("FCFS",gantt,input);
+    }
     }
 
     // خوارزمية SJF
