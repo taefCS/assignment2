@@ -16,7 +16,7 @@ class Process {
     }
 }
 
-public class CPUScheduler {
+public class CPUSchedule {
 
     static Scanner sc = new Scanner(System.in);
     static int n;
